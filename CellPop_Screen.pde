@@ -50,9 +50,9 @@ class MenuScreen extends Screen
     text("Touch to start !",width/2,height/1.5);
     textSize(15);
     fill(215);
-    text("Touchez les cellules lorsque qu'elles sont colorées\nSi vous touchez une cellule noire, elle se verrouille\nSi toutes la planche est remplie vous avez perdu", width/2, height/2);         
+    text("Touch the cells when they are colored\nIf you touch a black cell, she gets locked\nIf the board is full you have lost.", width/2, height/2);         
     textSize(12);
-    text("This game has been develop by Cybermissia.", width/2, height-30);
+    text("This game has been develop by Cybermissia. version : 0.1", width/2, height-30);
     rectMode(CORNER);
   }
   public int screen()
@@ -147,7 +147,7 @@ class ScoreScreen extends Screen
   {
     background(10,10,10);
     fill(215);
-    text("Score : " + this.score + "\nTime : " + Math.round(this.time/frameRate*100)/100, width/2,height/2);
+    text("Score : " + this.score + "\nTime : " + (double)Math.round((this.time/60)*100)/100 + " sec", width/2,height/2);
   }
   public int screen()
   {
