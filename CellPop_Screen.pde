@@ -8,6 +8,8 @@ abstract class Screen
 class MenuScreen extends Screen
 {
   float offsetText, vTitle, alphaText, vAlpha;
+  Button startButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"START", 30);
+  Button tutoButton = new Button(width/2-250/2,height/2.25-60/2,250,60,"TUTORIAL", 30);
   public MenuScreen()
   {
      offsetText = 20;
@@ -15,6 +17,9 @@ class MenuScreen extends Screen
   }
   public void update()
   {
+    startButton.update();
+    tutoButton.update();
+    
     alphaText += vAlpha;
     offsetText += vTitle;
     if(offsetText >= 20)
@@ -33,31 +38,29 @@ class MenuScreen extends Screen
   public void display()
   {
     background(10,10,10);
+    startButton.display();
+    tutoButton.display();
     //Background
     rectMode(CENTER);
     noStroke();
-    fill(255,255,255,50);
-    rect(width/2,height/2, width/1.3, height/8);
-    fill(255,255,255,50);
-    rect(width/2,height/4,200,110);
     //Text
     textAlign(CENTER,CENTER);
-    textSize(50);
+    textSize(60);
     fill(215);
     text("CellPop",width/2,height/4-offsetText-5);
-    textSize(30);
-    fill(215,215,215,alphaText);
-    text("Touch to start !",width/2,height/1.5);
+    if(tutoButton.isActive())
+    {
+      textSize(20);
+      fill(215);
+      text("Touch the cells when they are colored\nIf you touch a black cell, she gets locked\nIf the board is full you have lost.", width/2, height/1.75);       
+    }  
     textSize(15);
-    fill(215);
-    text("Touch the cells when they are colored\nIf you touch a black cell, she gets locked\nIf the board is full you have lost.", width/2, height/2);         
-    textSize(12);
     text("This game has been develop by Cybermissia. version : 0.1", width/2, height-30);
     rectMode(CORNER);
   }
   public int screen()
   {
-    if(mousePressed)
+    if(startButton.isActive())
       return 1; 
     return 0;
   }

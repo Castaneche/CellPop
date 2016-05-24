@@ -3,6 +3,7 @@ Game game;
 void setup()
 {
   size(displayWidth,displayHeight); 
+  orientation(PORTRAIT);
   frameRate(60);
   smooth();
   strokeWeight(3);
