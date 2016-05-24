@@ -57,7 +57,7 @@ class Cell
   void display()
   {
     fill(col);
-    stroke(255);
+    stroke(255,255,255,150);
     rect(x,y,w,h); 
   }
 }
@@ -71,7 +71,7 @@ class MovingText{
 class CellsManager
 {
   ArrayList<Cell> cells = new ArrayList();
-  final int offset = 5; 
+  final int offset = 1; 
   int score;
   
   public CellsManager()

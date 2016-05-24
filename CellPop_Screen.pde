@@ -7,7 +7,6 @@ abstract class Screen
 }
 class MenuScreen extends Screen
 {
-  float fps;
   float offsetText, vTitle, alphaText, vAlpha;
   Button startButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"START", 30);
   Button tutoButton = new Button(width/2-250/2,height/2.25-60/2,250,60,"TUTORIAL", 30);
