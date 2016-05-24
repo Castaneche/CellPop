@@ -22,12 +22,12 @@ void mouseReleased()
     GameScreen gs = GameScreen.class.cast(game.screen); 
     gs.handleMouseReleased();
   }
-  if(game.screen instanceof ScoreScreen)
+  /*if(game.screen instanceof ScoreScreen)
   {
     ScoreScreen sc = ScoreScreen.class.cast(game.screen);
     if(sc.clock/frameRate >= 3)
     {
       sc.screenToReturn = 0;
     } 
-  }
+  }*/
 }

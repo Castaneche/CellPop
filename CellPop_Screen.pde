@@ -7,6 +7,7 @@ abstract class Screen
 }
 class MenuScreen extends Screen
 {
+  float fps;
   float offsetText, vTitle, alphaText, vAlpha;
   Button startButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"START", 30);
   Button tutoButton = new Button(width/2-250/2,height/2.25-60/2,250,60,"TUTORIAL", 30);
@@ -135,6 +136,8 @@ class ScoreScreen extends Screen
   float clock;
   int screenToReturn;
   
+  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"Menu",30);
+  
   public ScoreScreen(int pscore, float ptime)
   {
     score = pscore;
@@ -144,17 +147,25 @@ class ScoreScreen extends Screen
   }
   public void update()
   {
+    if(clock/frameRate >= 3)
+      backButton.update();
     clock++;
   }
   public void display()
   {
     background(10,10,10);
     fill(215);
+    textSize(40);
     text("Score : " + this.score + "\nTime : " + (double)Math.round((this.time/60)*100)/100 + " sec", width/2,height/2);
+    
+    if(clock/frameRate >= 3)
+      backButton.display();
   }
   public int screen()
   {
-    return screenToReturn; 
+    if(backButton.isActive())
+      return 0;
+    return 3; 
   }
 }
 
