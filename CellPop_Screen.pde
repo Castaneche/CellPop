@@ -1,4 +1,4 @@
-//These class draw some stuff on the screen (like text)
+//These class draw some stuff on the screen (like text or button)
 // 0 = MainMenu
 // 1 = LoadingScreen
 // 2 = Game
@@ -15,9 +15,9 @@ abstract class Screen
 class MenuScreen extends Screen
 {
   float offsetText, vTitle, alphaText, vAlpha;
-  Button startButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"START", 30);
-  Button tutoButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"TUTORIAL", 30);
-  Button quitButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"QUIT", 30);
+  Button startButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"START", 30,-100);
+  Button tutoButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"TUTORIAL", 30, 100);
+  Button quitButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"QUIT", 30, -100);
   
   public MenuScreen()
   {
@@ -62,13 +62,13 @@ class MenuScreen extends Screen
     fill(215);
     text("CellPop",width/2,height/4-offsetText-5);        
     textSize(15);
-    text("This game has been develop by Cybermissia. version : 0.1", width/2, height-30);
+    text("This game has been develop by Cybermissia. version : 0.16", width/2, height-30);
     rectMode(CORNER);
   }
   public int screen()
   {
     if(startButton.isActive())
-      return 1; 
+      return 10; 
     if(tutoButton.isActive())
       return 11;
     return 0;
@@ -140,24 +140,17 @@ class ScoreScreen extends Screen
   //For the displaying
   int score;
   float time;
-  //For the input
-  float clock;
-  int screenToReturn;
   
-  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"Menu",30);
+  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"Menu",30, -100);
   
   public ScoreScreen(int pscore, float ptime)
   {
     score = pscore;
     time = ptime;
-    clock = 0; 
-    screenToReturn = 3;
   }
   public void update()
   {
-    if(clock/frameRate >= 3)
-      backButton.update();
-    clock++;
+    backButton.update();
   }
   public void display()
   {
@@ -166,8 +159,7 @@ class ScoreScreen extends Screen
     textSize(40);
     text("Score : " + this.score + "\nTime : " + (double)Math.round((this.time/60)*100)/100 + " sec", width/2,height/2);
     
-    if(clock/frameRate >= 3)
-      backButton.display();
+    backButton.display();
   }
   public int screen()
   {
@@ -176,10 +168,55 @@ class ScoreScreen extends Screen
     return 3; 
   }
 }
+class LevelScreen extends Screen
+{
+  float offsetText, vTitle;
+  Button easyButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"EASY",30,-100);
+  Button mediumButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"MEDIUM",30,100);
+  Button hardButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"HARD",30,-100);
+  Button backButton = new Button(width/2-250/2,height/2.75-60/2+240,250,60,"BACK",30,100);
+  public LevelScreen()
+  {
+    offsetText = 20;
+  }
+  public void update()
+  {
+    easyButton.update();
+    mediumButton.update();
+    hardButton.update();
+    backButton.update();
+    
+    offsetText += vTitle;
+    if(offsetText >= 20)
+      vTitle=-0.5; 
+    else if(offsetText <= -20)
+      vTitle=0.5;
+  }
+  public void display()
+  {
+    background(10,10,10);
+    easyButton.display();
+    mediumButton.display();
+    hardButton.display();
+    backButton.display();
+    textAlign(CENTER,CENTER);
+    textSize(60);
+    fill(215);
+    text("Level",width/2,height/4-offsetText);     
+  }
+  public int screen()
+  {
+    if(backButton.isActive())
+      return 0;
+    if(easyButton.isActive())
+      return 1;
+    return 10;
+  }
+}
 class TutoScreen extends Screen
 {
   float offsetText, vTitle;
-  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"BACK",30);
+  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"BACK",30,-100);
   public TutoScreen()
   {
     offsetText = 20;
