@@ -35,6 +35,11 @@ class Game
       if(!(screen instanceof ScoreScreen))
         screen = new ScoreScreen(this.score, this.time);
     } 
+    else if(screen.screen() == 11)
+    {
+      if(!(screen instanceof TutoScreen))
+        screen = new TutoScreen();
+    }
     display();
   }
   void update()
