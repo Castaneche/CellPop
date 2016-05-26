@@ -1,59 +1,24 @@
 class Game
 {
-  Screen screen;
-  int score;
-  float time;
+  ScreenMachine sm;
   
   public Game()
   {
-    screen = new MenuScreen(); 
+    sm = new ScreenMachine();
+    sm.changeScreen(new MenuScreen());
   }
   void run()
   {
     update();
-    if(screen.screen() == 0)
-    {
-      if(!(screen instanceof MenuScreen))
-        screen = new MenuScreen();
-    }
-    else if(screen.screen() == 1)
-    {
-      if(!(screen instanceof LoadingScreen))
-        screen = new LoadingScreen();
-    }
-    else if(screen.screen() == 2)
-    {
-      if(!(screen instanceof GameScreen))
-        screen = new GameScreen();
-      
-      GameScreen gs = GameScreen.class.cast(screen);
-      this.score = gs.score;
-      this.time = gs.time;
-    } 
-    else if(screen.screen() == 3)
-    {
-      if(!(screen instanceof ScoreScreen))
-        screen = new ScoreScreen(this.score, this.time);
-    } 
-    else if(screen.screen() == 10)
-    {
-      if(!(screen instanceof LevelScreen))
-        screen = new LevelScreen();
-    }
-    else if(screen.screen() == 11)
-    {
-      if(!(screen instanceof TutoScreen))
-        screen = new TutoScreen();
-    }
     display();
   }
   void update()
   {
-    screen.update();
+    this.sm.update();
   }
   void display()
   {
-    screen.display(); 
+    this.sm.display(); 
     //Display FPS
     textAlign(RIGHT,TOP);
     textSize(15);

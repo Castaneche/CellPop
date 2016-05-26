@@ -1,20 +1,28 @@
 class Board
 {
   CellsManager cm;
-  final float factor = 0.01;
   float clock, tps, tpsLimit;
+  int level;
+  float firstLimit, secondLimit; //Two limits for the spawn time
   
-  public Board()
+  public Board(int plevel)
   {
-    cm = new CellsManager();
+    level = plevel;
+    if(level == 0)
+      cm = new CellsManager(3);
+    else if(level == 1)
+      cm = new CellsManager(5);
+    else
+      cm = new CellsManager(7);
+    
     tpsLimit = 2;
   }
   void update()
   {
     clock++;
-    if(clock/frameRate >= 0.5 && tpsLimit >= 0.1)
+    if(clock/frameRate >= 0.5)
     {
-      increaseSpeed();
+      changeSpeed();
       clock = 0;
     }
     
@@ -31,9 +39,14 @@ class Board
   {
     cm.displayCells();
   }
-  void increaseSpeed()
+  void changeSpeed()
   {
-    tpsLimit -= factor;
+    if(level == 0)
+      tpsLimit = random(0.75,1.25);
+    else if(level == 1)
+      tpsLimit = random(0.3,0.75);
+    else
+      tpsLimit = random(0.15,0.3);
   }
   boolean isFull()
   {

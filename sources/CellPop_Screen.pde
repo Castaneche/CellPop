@@ -8,9 +8,8 @@
 
 abstract class Screen
 {
-  abstract void update();
+  abstract void update(ScreenMachine sm);
   abstract void display();
-  abstract int screen();
 }
 class MenuScreen extends Screen
 {
@@ -24,11 +23,16 @@ class MenuScreen extends Screen
      offsetText = 20;
      alphaText = 255;
   }
-  public void update()
+  public void update(ScreenMachine sm)
   {
     startButton.update();
     tutoButton.update();
     quitButton.update();
+    
+    if(startButton.isActive())
+      sm.changeScreen(new LevelScreen());
+    if(tutoButton.isActive())
+      sm.changeScreen(new TutoScreen());
     if(quitButton.isActive())
       exit();
     
@@ -65,24 +69,20 @@ class MenuScreen extends Screen
     text("This game has been develop by Cybermissia. version : 0.16", width/2, height-30);
     rectMode(CORNER);
   }
-  public int screen()
-  {
-    if(startButton.isActive())
-      return 10; 
-    if(tutoButton.isActive())
-      return 11;
-    return 0;
-  }
 }
 class LoadingScreen extends Screen
 {
   float countdown;
-  public LoadingScreen()
+  int level;
+  public LoadingScreen(int plevel)
   {
+    level = plevel;
     countdown = 180; 
   }
-  public void update()
+  public void update(ScreenMachine sm)
   {
+    if(countdown/frameRate <= 0)
+      sm.changeScreen(new GameScreen(level));
     countdown--;  
   }
   public void display()
@@ -93,12 +93,6 @@ class LoadingScreen extends Screen
     text("The game start in", width/2, height/4);
     text(Math.round(countdown/frameRate),width/2,height/2);
   }
-  public int screen()
-  {
-    if(countdown/frameRate <= 0)
-      return 2;
-    return 1;
-  }
 }
 class GameScreen extends Screen
 {
@@ -106,29 +100,27 @@ class GameScreen extends Screen
   int score; //Look in CellsManager for the score
   float time;
   
-  public GameScreen()
+  public GameScreen(int level)
   {
     score = 0;
     time = 0;
-    board = new Board();
+    board = new Board(level);
+    
   }
-  public void update()
-  {
+  public void update(ScreenMachine sm)
+  { 
     this.time++;
     this.score = board.cm.getScore();
+    
     if(!board.isFull())
-        board.update();
+      board.update();
+    else
+      sm.changeScreen(new ScoreScreen(this.score,this.time));
   }
   public void display()
   {
     background(10,10,10);
     board.display();
-  }
-  public int screen()
-  {
-    if(board.isFull())
-      return 3;  
-    return 2;
   }
   public void handleMouseReleased()
   {
@@ -148,9 +140,12 @@ class ScoreScreen extends Screen
     score = pscore;
     time = ptime;
   }
-  public void update()
+  public void update(ScreenMachine sm)
   {
     backButton.update();
+    
+    if(backButton.isActive())
+      sm.changeScreen(new MenuScreen());
   }
   public void display()
   {
@@ -161,12 +156,6 @@ class ScoreScreen extends Screen
     
     backButton.display();
   }
-  public int screen()
-  {
-    if(backButton.isActive())
-      return 0;
-    return 3; 
-  }
 }
 class LevelScreen extends Screen
 {
@@ -175,17 +164,35 @@ class LevelScreen extends Screen
   Button mediumButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"MEDIUM",30,100);
   Button hardButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"HARD",30,-100);
   Button backButton = new Button(width/2-250/2,height/2.75-60/2+240,250,60,"BACK",30,100);
+  int level = 0; //Default value
   public LevelScreen()
   {
     offsetText = 20;
   }
-  public void update()
+  public void update(ScreenMachine sm)
   {
     easyButton.update();
     mediumButton.update();
     hardButton.update();
     backButton.update();
     
+    if(backButton.isActive())
+      sm.changeScreen(new MenuScreen());
+    if(easyButton.isActive())
+    {
+      level = 0;
+      sm.changeScreen(new LoadingScreen(level));
+    }
+    if(mediumButton.isActive())
+    {
+      level = 1;
+      sm.changeScreen(new LoadingScreen(level));
+    }
+    if(hardButton.isActive())
+    {
+      level = 2;
+      sm.changeScreen(new LoadingScreen(level));
+    } 
     offsetText += vTitle;
     if(offsetText >= 20)
       vTitle=-0.5; 
@@ -204,14 +211,6 @@ class LevelScreen extends Screen
     fill(215);
     text("Level",width/2,height/4-offsetText);     
   }
-  public int screen()
-  {
-    if(backButton.isActive())
-      return 0;
-    if(easyButton.isActive())
-      return 1;
-    return 10;
-  }
 }
 class TutoScreen extends Screen
 {
@@ -221,9 +220,12 @@ class TutoScreen extends Screen
   {
     offsetText = 20;
   }
-  public void update()
+  public void update(ScreenMachine sm)
   {
     backButton.update();
+    
+    if(backButton.isActive())
+      sm.changeScreen(new MenuScreen());
     
     offsetText += vTitle;
     if(offsetText >= 20)
@@ -242,12 +244,6 @@ class TutoScreen extends Screen
     textSize(20);
     fill(215);
     text("Touch the cells when they are colored\nIf you touch a black cell, she gets locked\nIf the board is full you have lost.", width/2, height/2); 
-  }
-  public int screen()
-  {
-    if(backButton.isActive())
-      return 0;
-    return 11;
   }
 }
   

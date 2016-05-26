@@ -2,7 +2,7 @@ Game game;
 
 void setup()
 {
-  size(displayWidth,displayHeight); 
+  size(500,800); 
   orientation(PORTRAIT);
   frameRate(60);
   smooth();
@@ -16,10 +16,10 @@ void draw()
 }
 void mouseReleased()
 {
-  if(game.screen instanceof GameScreen) //If it's the GameScreen
+  if(game.sm.getCurrentScreen() instanceof GameScreen) //If it's the GameScreen
   {
     //Cast the class to use the special function 'handleMouseReleased'
-    GameScreen gs = GameScreen.class.cast(game.screen); 
+    GameScreen gs = GameScreen.class.cast(game.sm.getCurrentScreen()); 
     gs.handleMouseReleased();
   }
 }
