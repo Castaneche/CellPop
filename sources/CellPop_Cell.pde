@@ -74,15 +74,16 @@ class CellsManager
   final int offset = 1; 
   int score;
   
-  public CellsManager()
+  public CellsManager(int nbCellsX)
   {
     cells.clear();
     
-    int cellSize = width/5;
+    int cellSize = width/nbCellsX;
+    println(cellSize);
     int nbCellsH = height/cellSize;
     int adjust = height%cellSize/2; //adjust the screen
     
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < nbCellsX; i++)
     {
       for(int j = 0 ; j < nbCellsH ; j++)
       {
