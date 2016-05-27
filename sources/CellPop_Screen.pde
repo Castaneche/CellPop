@@ -16,7 +16,8 @@ class MenuScreen extends Screen
   float offsetText, vTitle, alphaText, vAlpha;
   Button startButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"START", 30,-100);
   Button tutoButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"TUTORIAL", 30, 100);
-  Button quitButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"QUIT", 30, -100);
+  Button scoreButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"HIGHSCORES", 30, -100);
+  Button quitButton = new Button(width/2-250/2,height/2.75-60/2+240,250,60,"QUIT", 30, 100);
   
   public MenuScreen()
   {
@@ -27,12 +28,15 @@ class MenuScreen extends Screen
   {
     startButton.update();
     tutoButton.update();
+    scoreButton.update();
     quitButton.update();
     
     if(startButton.isActive())
       sm.changeScreen(new LevelScreen());
     if(tutoButton.isActive())
       sm.changeScreen(new TutoScreen());
+    if(scoreButton.isActive())
+      sm.changeScreen(new HighScoreScreen());
     if(quitButton.isActive())
       exit();
     
@@ -56,6 +60,7 @@ class MenuScreen extends Screen
     background(10,10,10);
     startButton.display();
     tutoButton.display();
+    scoreButton.display();
     quitButton.display();
     //Background
     rectMode(CENTER);
@@ -66,15 +71,15 @@ class MenuScreen extends Screen
     fill(215);
     text("CellPop",width/2,height/4-offsetText-5);        
     textSize(15);
-    text("This game has been develop by Cybermissia. version : 0.17", width/2, height-30);
+    text("This game has been develop by Cybermissia. version : 0.18", width/2, height-30);
     rectMode(CORNER);
   }
 }
 class LoadingScreen extends Screen
 {
   float countdown;
-  int level;
-  public LoadingScreen(int plevel)
+  String level;
+  public LoadingScreen(String plevel)
   {
     level = plevel;
     countdown = 180; 
@@ -99,11 +104,13 @@ class GameScreen extends Screen
   Board board;
   int score; //Look in CellsManager for the score
   float time;
+  String level;
   
-  public GameScreen(int level)
+  public GameScreen(String plevel)
   {
     score = 0;
     time = 0;
+    level = plevel;
     board = new Board(level);
     
   }
@@ -115,7 +122,10 @@ class GameScreen extends Screen
     if(!board.isFull())
       board.update();
     else
+    {
+      updateFile(level, score, (float)Math.round((this.time/60)*100)/100);
       sm.changeScreen(new ScoreScreen(this.score,this.time));
+    }
   }
   public void display()
   {
@@ -138,7 +148,7 @@ class ScoreScreen extends Screen
   public ScoreScreen(int pscore, float ptime)
   {
     score = pscore;
-    time = ptime;
+    time = (float)Math.round((ptime/60)*100)/100;
   }
   public void update(ScreenMachine sm)
   {
@@ -152,7 +162,7 @@ class ScoreScreen extends Screen
     background(10,10,10);
     fill(215);
     textSize(40);
-    text("Score : " + this.score + "\nTime : " + (double)Math.round((this.time/60)*100)/100 + " sec", width/2,height/2);
+    text("Score : " + this.score + "\nTime : " + time + " sec", width/2,height/2);
     
     backButton.display();
   }
@@ -163,8 +173,9 @@ class LevelScreen extends Screen
   Button easyButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"EASY",30,-100);
   Button mediumButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"MEDIUM",30,100);
   Button hardButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"HARD",30,-100);
-  Button backButton = new Button(width/2-250/2,height/2.75-60/2+240,250,60,"BACK",30,100);
-  int level = 0; //Default value
+  Button insaneButton = new Button(width/2-250/2,height/2.75-60/2+240,250,60,"INSANE",30,100);
+  Button backButton = new Button(width/2-250/2,height/2.75-60/2+320,250,60,"BACK",30,-100);
+  String level; //Default value
   public LevelScreen()
   {
     offsetText = 20;
@@ -174,25 +185,31 @@ class LevelScreen extends Screen
     easyButton.update();
     mediumButton.update();
     hardButton.update();
+    insaneButton.update();
     backButton.update();
     
     if(backButton.isActive())
       sm.changeScreen(new MenuScreen());
     if(easyButton.isActive())
     {
-      level = 0;
+      level = "easy";
       sm.changeScreen(new LoadingScreen(level));
     }
     if(mediumButton.isActive())
     {
-      level = 1;
+      level = "medium";
       sm.changeScreen(new LoadingScreen(level));
     }
     if(hardButton.isActive())
     {
-      level = 2;
+      level = "hard";
       sm.changeScreen(new LoadingScreen(level));
     } 
+    if(insaneButton.isActive())
+    {
+      level = "insane";
+      sm.changeScreen(new LoadingScreen(level));
+    }
     offsetText += vTitle;
     if(offsetText >= 20)
       vTitle=-0.5; 
@@ -205,6 +222,7 @@ class LevelScreen extends Screen
     easyButton.display();
     mediumButton.display();
     hardButton.display();
+    insaneButton.display();
     backButton.display();
     textAlign(CENTER,CENTER);
     textSize(60);
@@ -246,4 +264,42 @@ class TutoScreen extends Screen
     text("Touch the cells when they are colored\nIf you touch a black cell, she gets locked\nIf the board is full you have lost.", width/2, height/2); 
   }
 }
-  
+class HighScoreScreen extends Screen
+{
+  float offsetText, vTitle;
+  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"BACK",30,-100);
+  ArrayList<String[]> highscores;
+  public HighScoreScreen()
+  {
+    highscores = read("score.txt");
+    offsetText = 20;
+  }
+  public void update(ScreenMachine sm)
+  {
+    backButton.update();
+    
+    if(backButton.isActive())
+      sm.changeScreen(new MenuScreen());
+    
+    offsetText += vTitle;
+    if(offsetText >= 20)
+      vTitle=-0.5; 
+    else if(offsetText <= -20)
+      vTitle=0.5;
+  }
+  public void display()
+  {
+    background(10,10,10);
+    backButton.display();
+    textAlign(CENTER,CENTER);
+    textSize(60);
+    fill(215);
+    text("HighScores",width/2,height/4-offsetText);  
+    for(int i = 0; i < highscores.size(); i++)
+    {
+      textSize(30);
+      fill(215);
+      text(highscores.get(i)[0] + " : " + highscores.get(i)[1] + " | " + highscores.get(i)[2], width/2, height/2.5+i*40);
+    }    
+  }
+}
