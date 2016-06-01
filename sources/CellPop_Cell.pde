@@ -8,12 +8,15 @@ class Cell
   color col;
   float alpha,r,g,b;
   boolean locked;
-  public Cell(float p_x, float p_y, float p_w, float p_h)
+  float clock; //the cell is locked if you wait too long
+  float timeLimit; 
+  public Cell(float p_x, float p_y, float p_w, float p_h, float ptimeLimit)
   {
     x = p_x; 
     y = p_y;
     w = p_w;
     h = p_h;
+    timeLimit = ptimeLimit;
   }
   void update()
   {
@@ -21,7 +24,15 @@ class Cell
     {
       alpha+=factor;
     }
-      col = color(r,g,b,alpha);  
+    else if(alpha >= 255 && !locked)
+    {
+      clock++;
+    }
+    
+    if(clock/frameRate >= timeLimit)
+      activateError();
+    
+    col = color(r,g,b,alpha);  
 }
   void activate()
   {
@@ -61,20 +72,13 @@ class Cell
     rect(x,y,w,h); 
   }
 }
-class MovingText{
-  float initX, initY;
-  float x, y;
-  float vx, vy;
-  String text;
-  
-}
 class CellsManager
 {
   ArrayList<Cell> cells = new ArrayList();
   final int offset = 1; 
   int score;
   
-  public CellsManager(int nbCellsX)
+  public CellsManager(int nbCellsX,float timeLimit)
   {
     cells.clear();
     
@@ -87,7 +91,7 @@ class CellsManager
     {
       for(int j = 0 ; j < nbCellsH ; j++)
       {
-        cells.add(new Cell(i*cellSize+offset,j*cellSize+offset+adjust,cellSize-offset*2,cellSize-offset*2));
+        cells.add(new Cell(i*cellSize+offset,j*cellSize+offset+adjust,cellSize-offset*2,cellSize-offset*2,timeLimit));
       } 
     }
   }

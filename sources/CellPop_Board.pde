@@ -9,14 +9,21 @@ class Board
   {
     level = plevel;
     if(level == "easy")
-      cm = new CellsManager(3);
+    {
+      cm = new CellsManager(3,4);
+    }
     else if(level == "medium")
-      cm = new CellsManager(5);
+    {
+      cm = new CellsManager(5,3.5);
+    }
     else if(level == "hard")
-      cm = new CellsManager(7);
+    {
+      cm = new CellsManager(7,3);
+    }
     else if(level == "insane")
-      cm = new CellsManager(8);
-    
+    {  
+      cm = new CellsManager(8,2);
+    }
     tpsLimit = 2;
   }
   void update()

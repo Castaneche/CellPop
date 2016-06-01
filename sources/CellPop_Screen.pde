@@ -31,13 +31,13 @@ class MenuScreen extends Screen
     scoreButton.update();
     quitButton.update();
     
-    if(startButton.isActive())
+    if(startButton.isReleased())
       sm.changeScreen(new LevelScreen());
-    if(tutoButton.isActive())
+    if(tutoButton.isReleased())
       sm.changeScreen(new TutoScreen());
-    if(scoreButton.isActive())
+    if(scoreButton.isReleased())
       sm.changeScreen(new HighScoreScreen());
-    if(quitButton.isActive())
+    if(quitButton.isReleased())
       exit();
     
     alphaText += vAlpha;
@@ -71,7 +71,7 @@ class MenuScreen extends Screen
     fill(215);
     text("CellPop",width/2,height/4-offsetText-5);        
     textSize(15);
-    text("This game has been develop by Cybermissia. version : 0.18", width/2, height-30);
+    text("This game has been develop by Cybermissia. version : 0.19", width/2, height-30);
     rectMode(CORNER);
   }
 }
@@ -154,7 +154,7 @@ class ScoreScreen extends Screen
   {
     backButton.update();
     
-    if(backButton.isActive())
+    if(backButton.isReleased())
       sm.changeScreen(new MenuScreen());
   }
   public void display()
@@ -188,24 +188,24 @@ class LevelScreen extends Screen
     insaneButton.update();
     backButton.update();
     
-    if(backButton.isActive())
+    if(backButton.isReleased())
       sm.changeScreen(new MenuScreen());
-    if(easyButton.isActive())
+    if(easyButton.isReleased())
     {
       level = "easy";
       sm.changeScreen(new LoadingScreen(level));
     }
-    if(mediumButton.isActive())
+    if(mediumButton.isReleased())
     {
       level = "medium";
       sm.changeScreen(new LoadingScreen(level));
     }
-    if(hardButton.isActive())
+    if(hardButton.isReleased())
     {
       level = "hard";
       sm.changeScreen(new LoadingScreen(level));
     } 
-    if(insaneButton.isActive())
+    if(insaneButton.isReleased())
     {
       level = "insane";
       sm.changeScreen(new LoadingScreen(level));
@@ -242,7 +242,7 @@ class TutoScreen extends Screen
   {
     backButton.update();
     
-    if(backButton.isActive())
+    if(backButton.isReleased())
       sm.changeScreen(new MenuScreen());
     
     offsetText += vTitle;
@@ -261,7 +261,7 @@ class TutoScreen extends Screen
     text("Tutorial",width/2,height/4-offsetText);    
     textSize(20);
     fill(215);
-    text("Touch the cells when they are colored\nIf you touch a black cell, she gets locked\nIf the board is full you have lost.", width/2, height/2); 
+    text("Touch the cells when they are colored\nIf you touch a black cell, she gets locked\nIf you wait too long before touch a cell, she gets locked\nIf the board is full you have lost.", width/2, height/2); 
   }
 }
 class HighScoreScreen extends Screen
@@ -278,7 +278,7 @@ class HighScoreScreen extends Screen
   {
     backButton.update();
     
-    if(backButton.isActive())
+    if(backButton.isReleased())
       sm.changeScreen(new MenuScreen());
     
     offsetText += vTitle;

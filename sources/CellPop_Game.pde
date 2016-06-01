@@ -27,4 +27,3 @@ class Game
     textAlign(CENTER,CENTER);
   }
 }
-

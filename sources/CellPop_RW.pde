@@ -32,9 +32,6 @@ void updateFile(String level, int score, float time)
       if(int(data.get(i)[1]) < score)
       { //Override the score
         data.get(i)[1] = String.valueOf(score);
-      }
-      if(float(data.get(i)[2]) > time || float(data.get(i)[2]) == 0)
-      { //Override the time
         data.get(i)[2] = String.valueOf(time);
       }
       write(data,"score.txt");

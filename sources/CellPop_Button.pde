@@ -1,6 +1,7 @@
 class Button
 {
   float x,y,w,h;
+  color col;
   String text;
   int textS;
   float offset;
@@ -14,42 +15,56 @@ class Button
     h = ph;
     text = ptext;
     textS = ptextS;
-    active = false;
     offset = poffset;
+    col = color(215);
   }
   public void update()
   {
+    col = color(215);
     
     if(offset < 0)
       offset += v;
     else if(offset > 0)
       offset -= v;
     
-    if(mousePressed && offset == 0)
-    {
-      if(mouseX >= x
-      && mouseX <= x+w
-      && mouseY >= y
-      && mouseY <= y+h)
-      {
-         active = true;
-      }
-    }
-    else
-      active = false;
+    
   }
   public void display()
   {
       noStroke();
-      fill(215);
+      fill(col);
       rect(x-offset,y,w+offset*2,h);
       fill(0);
       textAlign(CENTER,CENTER);
       textSize(textS);
       text(text,x+w/2,y+h/2);
   }
-  public boolean isActive()
+  public boolean isReleased()
   {
-    return active;
-  } 
+    if(mouseX >= x
+    && mouseX <= x+w
+    && mouseY >= y
+    && mouseY <= y+h)
+    {
+      if(mousePressed && offset == 0)
+      {
+           col = color(150);
+           active = true;
+
+      }
+      else if(!mousePressed && active)
+      {
+        return true;
+      }
+      else
+      {
+        active = false; 
+      }
+    }
+    else
+    {
+      active = false; 
+    }
+    return false; 
+  }
 }
