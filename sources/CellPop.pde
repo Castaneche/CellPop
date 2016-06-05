@@ -2,7 +2,7 @@ Game game;
 
 void setup()
 {
-  size(displayWidth,displayHeight); 
+  size(500,800); 
   orientation(PORTRAIT);
   frameRate(60);
   smooth();

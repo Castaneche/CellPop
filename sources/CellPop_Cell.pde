@@ -8,15 +8,12 @@ class Cell
   color col;
   float alpha,r,g,b;
   boolean locked;
-  float clock; //the cell is locked if you wait too long
-  float timeLimit; 
   public Cell(float p_x, float p_y, float p_w, float p_h, float ptimeLimit)
   {
     x = p_x; 
     y = p_y;
     w = p_w;
     h = p_h;
-    timeLimit = ptimeLimit;
   }
   void update()
   {
@@ -24,13 +21,6 @@ class Cell
     {
       alpha+=factor;
     }
-    else if(alpha >= 255 && !locked)
-    {
-      clock++;
-    }
-    
-    if(clock/frameRate >= timeLimit)
-      activateError();
     
     col = color(r,g,b,alpha);  
 }
@@ -51,9 +41,9 @@ class Cell
     else
       return false;
   }
-  void activateError() //set a red color
+  void activateError()
   {
-    r = 255;
+    r = 0;
     g = b = 0;
     alpha = 255;
     factor = 0;
@@ -70,6 +60,11 @@ class Cell
     fill(col);
     stroke(255,255,255,150);
     rect(x,y,w,h); 
+    if(locked)
+    {
+      line(x,y,x+w,y+h);
+      line(x+w,y,x,y+h); 
+    }
   }
 }
 class CellsManager

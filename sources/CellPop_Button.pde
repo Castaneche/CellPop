@@ -2,12 +2,13 @@ class Button
 {
   float x,y,w,h;
   color col;
+  float r,g,b;
   String text;
   int textS;
   float offset;
   final float v = 5;
   boolean active;
-  public Button(float px, float py, float pw, float ph, String ptext, int ptextS, float poffset)
+  public Button(float px, float py, float pw, float ph, String ptext, int ptextS, float poffset, color pcol)
   {
     x = px;
     y = py;
@@ -16,12 +17,15 @@ class Button
     text = ptext;
     textS = ptextS;
     offset = poffset;
-    col = color(215);
+    
+    r = red(pcol);
+    g = green(pcol);
+    b = blue(pcol);
+    col = color(r,g,b,255);
   }
   public void update()
   {
-    col = color(215);
-    
+    col = color(r,g,b,255);
     if(offset < 0)
       offset += v;
     else if(offset > 0)
@@ -48,7 +52,7 @@ class Button
     {
       if(mousePressed && offset == 0)
       {
-           col = color(150);
+           col = color(r,g,b,215);
            active = true;
 
       }
