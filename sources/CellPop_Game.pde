@@ -5,7 +5,7 @@ class Game
   public Game()
   {
     sm = new ScreenMachine();
-    sm.changeScreen(new MenuScreen());
+    sm.changeScreen(new IntroScreen());
   }
   void run()
   {

@@ -11,13 +11,31 @@ abstract class Screen
   abstract void update(ScreenMachine sm);
   abstract void display();
 }
+class IntroScreen extends Screen
+{
+  Intro intro = new Intro("icon_CellPop.png");
+  public IntroScreen()
+  {
+     
+  }
+  public void update(ScreenMachine sm)
+  {
+    intro.update();
+    if(intro.t / frameRate > 5 || mousePressed) sm.changeScreen(new MenuScreen());
+  }
+  public void display()
+  {
+    background(10);
+    intro.display();
+  }
+}
 class MenuScreen extends Screen
 {
   float offsetText, vTitle, alphaText, vAlpha;
-  Button startButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"START", 30,-100,RED);
-  Button tutoButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"TUTORIAL", 30, 100,GREEN);
-  Button scoreButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"HIGHSCORES", 30, -100, LIGHTBLUE);
-  Button quitButton = new Button(width/2-250/2,height/2.75-60/2+240,250,60,"QUIT", 30, 100, WHITE);
+  Button startButton = new Button(width/2-300/2,height/2.75-60/2,300,60,"START", 30,-100,RED);
+  Button tutoButton = new Button(width/2-300/2,height/2.75-60/2+80,300,60,"TUTORIAL", 30, 100,GREEN);
+  Button scoreButton = new Button(width/2-300/2,height/2.75-60/2+160,300,60,"HIGHSCORES", 30, -100, LIGHTBLUE);
+  Button quitButton = new Button(width/2-300/2,height/2.75-60/2+240,300,60,"QUIT", 30, 100, WHITE);
   
   public MenuScreen()
   {

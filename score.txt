@@ -1,0 +1,4 @@
+easy 28 25.37
+medium 70 33.92
+hard 45 18.7
+insane 40 15.38
