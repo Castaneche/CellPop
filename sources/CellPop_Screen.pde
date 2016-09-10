@@ -89,7 +89,7 @@ class MenuScreen extends Screen
     fill(215);
     text("CellPop",width/2,height/4-offsetText-5);        
     textSize(15);
-    text("This game has been develop by Cybermissia. version : 0.20", width/2, height-30);
+    text("This game has been develop by Cybermissia. version : 0.21", width/2, height-30);
     rectMode(CORNER);
   }
 }
