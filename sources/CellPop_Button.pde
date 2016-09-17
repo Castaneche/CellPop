@@ -11,11 +11,11 @@ class Button
   public Button(float px, float py, float pw, float ph, String ptext, float ptextS, float poffset, color pcol)
   {
     if(percentMode) {
-      x = (px/100)*width;
-      y = (py/100)*height;
-      w = (pw/100)*width;
-      h = (ph/100)*height;
-      offset = int((poffset/100)*w);
+      x = (int)((px/100)*width);
+      y = (int)((py/100)*height);
+      w = (int)((pw/100)*width);
+      h = (int)((ph/100)*height);
+      offset = (int)((poffset/100)*w);
       println(offset);
     }
     else {
