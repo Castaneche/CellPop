@@ -32,10 +32,10 @@ class IntroScreen extends Screen
 class MenuScreen extends Screen
 {
   float offsetText, vTitle, alphaText, vAlpha;
-  Button startButton = new Button(20,35,60,10,"START", adjustTextSize(40),-10,RED);
-  Button tutoButton = new Button(20,47.5,60,10,"TUTORIAL", adjustTextSize(40), 10,GREEN);
-  Button scoreButton = new Button(20,60,60,10,"HIGHSCORES", adjustTextSize(40), -10, LIGHTBLUE);
-  Button quitButton = new Button(20,72.5,60,10,"QUIT",adjustTextSize(40), 10, WHITE);
+  Button startButton = new Button(20,35,60,10,"START", adjustTextSize(40),RED);
+  Button tutoButton = new Button(20,47.5,60,10,"TUTORIAL", adjustTextSize(40),GREEN);
+  Button scoreButton = new Button(20,60,60,10,"HIGHSCORES", adjustTextSize(40), LIGHTBLUE);
+  Button quitButton = new Button(20,72.5,60,10,"QUIT",adjustTextSize(40), WHITE);
   
   public MenuScreen()
   {
@@ -137,7 +137,7 @@ class ScoreScreen extends Screen
   int score;
   float time;
   
-  Button backButton = new Button(25,60,50,10,"Menu",adjustTextSize(40), -10,WHITE);
+  Button backButton = new Button(25,60,50,10,"Menu",adjustTextSize(40),WHITE);
   
   public ScoreScreen(int pscore, float ptime)
   {
@@ -164,11 +164,11 @@ class ScoreScreen extends Screen
 class LevelScreen extends Screen
 {
   float offsetText, vTitle;
-  Button easyButton = new Button(20,35,60,10,"EASY",adjustTextSize(40),-10,YELLOW);
-  Button mediumButton = new Button(20,47.5,60,10,"MEDIUM",adjustTextSize(40),10,ORANGE);
-  Button hardButton = new Button(20,60,60,10,"HARD",adjustTextSize(40),-10,LIGHTRED);
-  Button insaneButton = new Button(20,72.5,60,10,"INSANE",adjustTextSize(40),10,RED);
-  Button backButton = new Button(20,85,60,10,"BACK",adjustTextSize(40),-10,WHITE);
+  Button easyButton = new Button(20,35,60,10,"EASY",adjustTextSize(40),YELLOW);
+  Button mediumButton = new Button(20,47.5,60,10,"MEDIUM",adjustTextSize(40),ORANGE);
+  Button hardButton = new Button(20,60,60,10,"HARD",adjustTextSize(40),LIGHTRED);
+  Button insaneButton = new Button(20,72.5,60,10,"INSANE",adjustTextSize(40),RED);
+  Button backButton = new Button(20,85,60,10,"BACK",adjustTextSize(40),WHITE);
   String level; //Default value
   public LevelScreen()
   {
@@ -227,7 +227,7 @@ class LevelScreen extends Screen
 class TutoScreen extends Screen
 {
   float offsetText, vTitle;
-  Button backButton = new Button(20,72.5,60,10,"BACK",adjustTextSize(40),-10,WHITE);
+  Button backButton = new Button(20,72.5,60,10,"BACK",adjustTextSize(40),WHITE);
   public TutoScreen()
   {
     offsetText = 20;
@@ -264,7 +264,7 @@ class TutoScreen extends Screen
 class HighScoreScreen extends Screen
 {
   float offsetText, vTitle;
-  Button backButton = new Button(20,72.5,60,10,"BACK",adjustTextSize(40),-10,WHITE);
+  Button backButton = new Button(20,72.5,60,10,"BACK",adjustTextSize(40),WHITE);
   ArrayList<String[]> highscores;
   public HighScoreScreen()
   {
