@@ -13,10 +13,10 @@ class Intro {
   public void display() {
     image(logo, width/2 - width/4, height/2 - height/3, width/2, height/3);
     textAlign(CENTER);
-    textSize(65);
+    textSize(adjustTextSize(65));
     fill(255);
     text("CellPop", width/2, height/2 + 60);
-    textSize(35);
+    textSize(adjustTextSize(35));
     text("by Cybermissia", width/2, height/2 + 120);
     
     //Fade effect

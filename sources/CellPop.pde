@@ -1,8 +1,11 @@
+//Global variable
+boolean percentMode = true;
+
 Game game;
 
 void setup()
 {
-  size(500,800); 
+  size(displayWidth,displayHeight); 
   orientation(PORTRAIT);
   frameRate(60);
   smooth();

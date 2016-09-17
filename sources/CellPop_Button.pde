@@ -4,25 +4,35 @@ class Button
   color col;
   float r,g,b;
   String text;
-  int textS;
+  float textS;
   float offset;
   final float v = 5;
   boolean active;
-  public Button(float px, float py, float pw, float ph, String ptext, int ptextS, float poffset, color pcol)
+  public Button(float px, float py, float pw, float ph, String ptext, float ptextS, float poffset, color pcol)
   {
-    x = px;
-    y = py;
-    w = pw;
-    h = ph;
+    if(percentMode) {
+      x = (px/100)*width;
+      y = (py/100)*height;
+      w = (pw/100)*width;
+      h = (ph/100)*height;
+      offset = int((poffset/100)*w);
+      println(offset);
+    }
+    else {
+      x = px;
+      y = py;
+      w = pw;
+      h = ph;
+      offset = poffset;
+    } 
     text = ptext;
     textS = ptextS;
-    offset = poffset;
     
     r = red(pcol);
     g = green(pcol);
     b = blue(pcol);
     col = color(r,g,b,255);
-  }
+   }
   public void update()
   {
     col = color(r,g,b,255);

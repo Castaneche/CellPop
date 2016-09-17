@@ -32,10 +32,10 @@ class IntroScreen extends Screen
 class MenuScreen extends Screen
 {
   float offsetText, vTitle, alphaText, vAlpha;
-  Button startButton = new Button(width/2-300/2,height/2.75-60/2,300,60,"START", 30,-100,RED);
-  Button tutoButton = new Button(width/2-300/2,height/2.75-60/2+80,300,60,"TUTORIAL", 30, 100,GREEN);
-  Button scoreButton = new Button(width/2-300/2,height/2.75-60/2+160,300,60,"HIGHSCORES", 30, -100, LIGHTBLUE);
-  Button quitButton = new Button(width/2-300/2,height/2.75-60/2+240,300,60,"QUIT", 30, 100, WHITE);
+  Button startButton = new Button(20,35,60,10,"START", adjustTextSize(40),-10,RED);
+  Button tutoButton = new Button(20,47.5,60,10,"TUTORIAL", adjustTextSize(40), 10,GREEN);
+  Button scoreButton = new Button(20,60,60,10,"HIGHSCORES", adjustTextSize(40), -10, LIGHTBLUE);
+  Button quitButton = new Button(20,72.5,60,10,"QUIT",adjustTextSize(40), 10, WHITE);
   
   public MenuScreen()
   {
@@ -85,11 +85,11 @@ class MenuScreen extends Screen
     noStroke();
     //Text
     textAlign(CENTER,CENTER);
-    textSize(60);
+    textSize(adjustTextSize(60));
     fill(215);
     text("CellPop",width/2,height/4-offsetText-5);        
-    textSize(15);
-    text("This game has been develop by Cybermissia. version : 0.20", width/2, height-30);
+    textSize(adjustTextSize(15));
+    text("This game has been develop by Cybermissia. version : 0.22", width/2, height-30);
     rectMode(CORNER);
   }
 }
@@ -137,7 +137,7 @@ class ScoreScreen extends Screen
   int score;
   float time;
   
-  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"Menu",30, -100,WHITE);
+  Button backButton = new Button(25,60,50,10,"Menu",adjustTextSize(40), -10,WHITE);
   
   public ScoreScreen(int pscore, float ptime)
   {
@@ -155,7 +155,7 @@ class ScoreScreen extends Screen
   {
     background(10,10,10);
     fill(215);
-    textSize(40);
+    textSize(adjustTextSize(40));
     text("Score : " + this.score + "\nTime : " + time + " sec", width/2,height/2);
     
     backButton.display();
@@ -164,11 +164,11 @@ class ScoreScreen extends Screen
 class LevelScreen extends Screen
 {
   float offsetText, vTitle;
-  Button easyButton = new Button(width/2-250/2,height/2.75-60/2,250,60,"EASY",30,-100,YELLOW);
-  Button mediumButton = new Button(width/2-250/2,height/2.75-60/2+80,250,60,"MEDIUM",30,100,ORANGE);
-  Button hardButton = new Button(width/2-250/2,height/2.75-60/2+160,250,60,"HARD",30,-100,LIGHTRED);
-  Button insaneButton = new Button(width/2-250/2,height/2.75-60/2+240,250,60,"INSANE",30,100,RED);
-  Button backButton = new Button(width/2-250/2,height/2.75-60/2+320,250,60,"BACK",30,-100,WHITE);
+  Button easyButton = new Button(20,35,60,10,"EASY",adjustTextSize(40),-10,YELLOW);
+  Button mediumButton = new Button(20,47.5,60,10,"MEDIUM",adjustTextSize(40),10,ORANGE);
+  Button hardButton = new Button(20,60,60,10,"HARD",adjustTextSize(40),-10,LIGHTRED);
+  Button insaneButton = new Button(20,72.5,60,10,"INSANE",adjustTextSize(40),10,RED);
+  Button backButton = new Button(20,85,60,10,"BACK",adjustTextSize(40),-10,WHITE);
   String level; //Default value
   public LevelScreen()
   {
@@ -219,7 +219,7 @@ class LevelScreen extends Screen
     insaneButton.display();
     backButton.display();
     textAlign(CENTER,CENTER);
-    textSize(60);
+    textSize(adjustTextSize(60));
     fill(WHITE);
     text("Level",width/2,height/4-offsetText);     
   }
@@ -227,7 +227,7 @@ class LevelScreen extends Screen
 class TutoScreen extends Screen
 {
   float offsetText, vTitle;
-  Button backButton = new Button(width/2-250/2,height/1.35-60/2,250,60,"BACK",30,-100,WHITE);
+  Button backButton = new Button(20,72.5,60,10,"BACK",adjustTextSize(40),-10,WHITE);
   public TutoScreen()
   {
     offsetText = 20;
@@ -250,7 +250,7 @@ class TutoScreen extends Screen
     background(10,10,10);
     backButton.display();
     textAlign(CENTER,CENTER);
-    textSize(60);
+    textSize(adjustTextSize(60));
     fill(GREEN);
     text("Tutorial",width/2,height/4-offsetText);    
     textSize(20);
@@ -264,7 +264,7 @@ class TutoScreen extends Screen
 class HighScoreScreen extends Screen
 {
   float offsetText, vTitle;
-  Button backButton = new Button(width/2-250/2,height/1.5-60/2,250,60,"BACK",30,-100,WHITE);
+  Button backButton = new Button(20,72.5,60,10,"BACK",adjustTextSize(40),-10,WHITE);
   ArrayList<String[]> highscores;
   public HighScoreScreen()
   {
@@ -289,14 +289,16 @@ class HighScoreScreen extends Screen
     background(10,10,10);
     backButton.display();
     textAlign(CENTER,CENTER);
-    textSize(60);
+    textSize(adjustTextSize(60));
     fill(LIGHTBLUE);
     text("HighScores",width/2,height/4-offsetText);  
+    String highscoreText = "";
     for(int i = 0; i < highscores.size(); i++)
     {
-      textSize(30);
-      fill(215);
-      text(highscores.get(i)[0] + " : " + highscores.get(i)[1] + " | " + highscores.get(i)[2], width/2, height/2.5+i*40);
-    }    
+      highscoreText += highscores.get(i)[0] + " : " + highscores.get(i)[1] + " | " + highscores.get(i)[2] + "\n";
+    }
+    textSize(adjustTextSize(30));
+    fill(215);
+    text(highscoreText, width/2, height/1.8);  
   }
 }
